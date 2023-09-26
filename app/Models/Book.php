@@ -15,6 +15,7 @@ class Book extends Model
         'description',
         'cover_image',
         'market_price',
+        'delete_status',
     ];
 
     public function userCart(){

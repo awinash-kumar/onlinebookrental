@@ -57,6 +57,13 @@
     transition: all 0.3s ease-in-out;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 .form-control:focus {
     border-color: #00bcd9;
     -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
@@ -154,7 +161,7 @@ textarea.form-control {
                                 <div class="form-group">
                                     <label id="number-label" for="number">Mobile Number</label>
                                     <input type="number" name="mobile" id="number" value="{{old('mobile')}}"
-                                        class="form-control" placeholder="Enter mobile number">
+                                    max="999999999999" oninput="validity.valid||(value='');"  class="form-control" placeholder="Enter mobile number">
                                     @error('mobile')
                                     <span class="text-danger">
                                         {{$message}}

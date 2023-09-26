@@ -61,6 +61,9 @@
         <!-- top nav -->
         <!-- main content -->
         <main class="p-4 min-vh-100" style="padding-top:40px!important;">
+            @if(Session::has('success'))
+            <p class="alert alert-info" style="margin-left: 442px; width:253px;">{{ Session::get('success') }}</p>
+            @endif
             <div class="row">
                 <div class="col-xl-3 col-sm-6 col-12">
                     <div class="card">
@@ -186,4 +189,11 @@ $(document).ready(function() {
         $(this).addClass("active");
     });
 });
+</script>
+<script>
+function deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this Customer?')) {
+        window.location.href = '/custmer/user_delete/' + userId;
+    } else {}
+}
 </script>

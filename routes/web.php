@@ -43,6 +43,7 @@ Route::middleware([CheckAdminRole::class])->group(function () {
     Route::get('/custmer/edit/{user_id}',[UserController::class, 'edit'])->name('custmer.edit');
     Route::post('/custmer/update/{user_id}',[UserController::class, 'update'])->name('custmer.update');
     Route::get('/custmer/delete/{user_id}',[UserController::class, 'delete'])->name('custmer.delete');
+    Route::get('/custmer/user_delete/{user_id}',[UserController::class, 'user_delete'])->name('custmer.user_delete');
     Route::get('/custmer/show/{user_id}',[UserController::class, 'show'])->name('custmer.show');
    
 });
@@ -93,6 +94,7 @@ Route::middleware([CheckCustomorRole::class])->group(function () {
     Route::get('/user_piadorder/{trans_id}',[OrderPaidController::class, 'show'])->name('paidorder.show');
 });
 
+//Custmor Return payment order
 Route::get('/returnbook/{order_id}', [RentController::class, 'return_book'])->name('return');
 Route::post('/returns_book/{order_id}', [RentController::class, 'store'])->name('return.store');
   

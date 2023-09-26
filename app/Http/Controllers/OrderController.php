@@ -28,7 +28,6 @@ class OrderController extends Controller
   
         public function show($tran_id){
             $orderdetail = Paidorders::with(['rentpaidOrder','paidOrder'])->where('transaction_id',$tran_id)->orderBy('id', 'DESC')->get();
-            // dd($orderdetail);
             return view('order_details')->with(compact('orderdetail'));
           }
 }

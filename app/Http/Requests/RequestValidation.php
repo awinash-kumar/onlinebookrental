@@ -23,10 +23,10 @@ class RequestValidation extends FormRequest
     {
         // dd('hhh');
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|alpha |max:255',
             'email' => 'required|email|unique:users',
             'address' => 'nullable|string|max:255',
-            'mobile' => 'required|nullable|string|min:10',
+            'mobile' => 'required|nullable|string|between:10,12',
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|same:password',
         ];

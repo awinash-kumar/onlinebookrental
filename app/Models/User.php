@@ -24,6 +24,7 @@ class User extends Authenticatable
         'mobile',
         'password',
         'role_id',
+        'delete_status'
     ];
 
     /**

@@ -69,7 +69,13 @@ textarea.form-control {
     padding-top: 15px;
     resize: none;
 }
-
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 /* sidebar for small screens */
 @media screen and (max-width: 767px) {
     .sidebar {
@@ -169,7 +175,7 @@ textarea.form-control {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="market_price-label" for="number">Market Price</label>
-                                    <input type="text" name="market_price" id="market_price"
+                                    <input type="number" name="market_price" id="market_price"
                                         value="{{old('market_price',$book->market_price)}}" class="form-control"
                                         placeholder="Enter your market_price">
                                     @error('market_price')

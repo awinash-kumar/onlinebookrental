@@ -30,11 +30,11 @@
                 </div>
                 <div class="product-price text_col" id="rentalPrice">{{ $book->rent_price}}</div>
                 <div class="product-quantity text_col">
-                    <input type="number" id="quantity" value="{{ $book->qty}}" class="form-control"
+                    <input type="number" id="quantity"  value="{{ $book->qty}}" min="0" max="5" oninput="validity.valid||(value='');" class="form-control"
                         style="padding: 4px 0px 5px 12px; text-align: center;">
                 </div>
                 <div class="product-day text_col">
-                    <input type="number" id="quantity" value="{{ $book->days}}" class="form-control"
+                    <input type="number" id="day" value="{{ $book->days}}" min="0" max="10" oninput="validity.valid||(value='');" class="form-control"
                         style="padding: 4px 0px 5px 12px; text-align: center;">
                 </div>
                 <div class="product-removal">

@@ -8,27 +8,32 @@ use Illuminate\Support\Facades\File;
 
 class BookController extends Controller
 {
-    public function index(Request $request){
+      public function index(Request $request){
       $search = $request->search ?? "";
-      if($search !=''){
-        $book = Book::where('title','LIKE',"%$search%")->orwhere('author','LIKE',"%$search%")->paginate(10);
-    }else{ 
-        $book = Book::orderBy('id','DESC')->paginate(10);
 
-    }
+      if($search !=''){
+        $book = Book::where('author','LIKE',"%$search%")->where('delete_status',0)->paginate(10);
+      }
+
+        if($search !=''){
+          $book = Book::where('title','LIKE',"%$search%")->where('delete_status',0)->paginate(10);
+        }else{ 
+          $book = Book::where('delete_status',0)->orderBy('id','DESC')->paginate(10);
+
+        }
       return view('book_list')->with(compact('book'));
       }
+
       public function create(){
         return view('add_book');
       }
       
       public function store(Request $request){
-          //  dd($request->all());die;
               $validation =  validator::make($request->all(),[
-                'title'=>'required',
-                'author'=>'required',
+                'title'=>'required | regex:/^[\pL\s\-]+$/u',
+                'author'=>'required | regex:/^[\pL\s\-]+$/u',
                 'description'=>'required',
-                'market_price'=>'required',
+                'market_price'=>'required | numeric |min:0',
               ]);
     
               if($validation->passes()){
@@ -37,12 +42,12 @@ class BookController extends Controller
                   $book->author = $request['author'];
                   $book->description = $request['description'];
                   $book->market_price = $request['market_price'];
+                  $book->delete_status = 0;
                   $book->save();
                    if ($request->hasFile('images')) {
                         $image = $request->file('images');
                         $imageName = time() . '.' . $image->getClientOriginalExtension();
                         $image->move(public_path('uploads/books'), $imageName);
-    
                         // Save the image path in the database
                         $book->images = $imageName;
                         $book->save();
@@ -68,10 +73,10 @@ class BookController extends Controller
           public function update($id, Request $request){
 
             $validation =  validator::make($request->all(),[
-                'title'=>'required',
-                'author'=>'required',
-                'description'=>'required',
-                'market_price'=>'required',
+              'title'=>'required | regex:/^[\pL\s\-]+$/u',
+              'author'=>'required | regex:/^[\pL\s\-]+$/u',
+              'description'=>'required ',
+              'market_price'=>'required | numeric |min:0',
               ]);
     
               if($validation->passes()){
@@ -80,13 +85,13 @@ class BookController extends Controller
                   $book->author = $request['author'];
                   $book->description = $request['description'];
                   $book->market_price = $request['market_price'];
+                  $book->delete_status = 0;
                   $book->save();
                    if ($request->hasFile('images')) {
                     $oldImg = $book->images;
                         $image = $request->file('images');
                         $imageName = time() . '.' . $image->getClientOriginalExtension();
-                        $image->move(public_path('uploads/books'), $imageName);
-    
+                        $image->move(public_path('uploads/books'), $imageName);   
                         // Save the image path in the database
                         $book->images = $imageName;
                         $book->save();
@@ -104,7 +109,8 @@ class BookController extends Controller
             $book = Book::find($id);
             if($book!=''){
                 File::delete(public_path('uploads/book/' .$book->images));
-                $book->delete();
+                Book::where('id', $id)->update(['delete_status' => 1]);
+                // $book->delete();
                 return to_route('book.index')->with('success', 'Deleted successfully!');
             }
           }
@@ -120,6 +126,5 @@ class BookController extends Controller
               $book->cover_image_url = asset('uploads/books/' . $book->images);
               return response()->json($book);
           }
-
-          
+       
 }

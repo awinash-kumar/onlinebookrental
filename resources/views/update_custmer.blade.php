@@ -73,7 +73,13 @@ textarea.form-control {
     resize: none;
 }
 
-
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 
 /* sidebar for small screens */
 @media screen and (max-width: 767px) {
@@ -166,7 +172,7 @@ textarea.form-control {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="number-label" for="number">Mobile Number</label>
-                                    <input type="number" name="mobile" id="number" value="{{old('mobile',$custmer->mobile)}}"
+                                    <input type="number" name="mobile" id="number" value="{{old('mobile',$custmer->mobile)}}"   max="999999999999" oninput="validity.valid||(value='');"
                                         class="form-control" placeholder="Enter mobile number">
                                     @error('mobile')
                                     <span class="text-danger">
@@ -175,26 +181,26 @@ textarea.form-control {
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="number-label" for="number">Password</label>
                                     <input type="password" name="password" id="password" class="form-control"
-                                        placeholder="Enter password" value="{{old('passwprd',$custmer->password)}}">
+                                        placeholder="Enter password" value="">
                                     @error('password')
                                     <span class="text-danger">
                                         {{$message}}
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="number-label" for="number"> Confirm Password</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation" 
-                                        min="10" max="99" class="form-control" placeholder="Confirm Password" value="{{old('passwprd',$custmer->password)}}">
+                                        min="10" max="99" class="form-control" placeholder="Confirm Password" value="">
                                     @error('password_confirmation')
                                     <span class="text-danger">
                                         {{$message}}
@@ -202,7 +208,7 @@ textarea.form-control {
                                     @enderror
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

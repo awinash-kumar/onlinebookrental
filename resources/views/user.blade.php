@@ -18,7 +18,7 @@
             @endif
         </span>
         <div class="row">
-        @if($book !='')
+        @if(!$book->isEmpty())
             @foreach( $book as $books)
           
             <div class="col-md-3">

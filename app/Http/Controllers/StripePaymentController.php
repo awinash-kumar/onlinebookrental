@@ -41,7 +41,6 @@ class StripePaymentController extends Controller
         try {
             $payNow = RentCard::where('user_id' , Auth::id())->where('book_status',1)->sum('t_price');
             $orderpaidbook = RentCard::with('bookcart')->where('user_id' , Auth::id())->where('book_status',1)->orderBy('id', 'DESC')->get();
-            // dd($orderpaidbook);
             $stripe = new StripeClient(env('STRIPE_SECRET'));
             $value = $stripe->paymentIntents->create([
                 'confirm' => true,
@@ -49,14 +48,12 @@ class StripePaymentController extends Controller
                 'currency' => 'inr',
                 'payment_method' => $request->payment_method,
                 'description' => 'Demo payment with stripe',
-                // 'receipt_email' => $request->email,
                 'automatic_payment_methods' => [
                     'enabled' => true,
                     'allow_redirects' => 'never'
                 ],
                 'off_session' => true,
             ]);
-            // To store transaction data in our database
             $this->savepaymentOrders($value,$orderpaidbook);
         } catch (Exception $th) {
             return back()->with('error', "There was a problem processing your payment");
@@ -122,14 +119,12 @@ class StripePaymentController extends Controller
                 'currency' => 'inr',
                 'payment_method' => $request->payment_method,
                 'description' => 'Demo payment with stripe',
-                // 'receipt_email' => $request->email,
                 'automatic_payment_methods' => [
                     'enabled' => true,
                     'allow_redirects' => 'never'
                 ],
                 'off_session' => true,
             ]);
-            // To store transaction data in our database
             $this->savereturnpaymentOrders($order_id);
         } catch (Exception $th) {
             return back()->with('error', "There was a problem processing your payment");
@@ -141,7 +136,5 @@ class StripePaymentController extends Controller
         RentCard::where('id', $order_id)->update(['return_status' => 1]);
         return redirect()->route('paidorder.index')->with('success', 'Return successfully');
     }
-
-
-    
+   
 }

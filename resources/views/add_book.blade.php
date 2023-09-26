@@ -57,6 +57,14 @@
     transition: all 0.3s ease-in-out;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
 .form-control:focus {
     border-color: #00bcd9;
     -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
@@ -168,7 +176,7 @@ textarea.form-control {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="market_price-label" for="number">Market Price</label>
-                                    <input type="text" name="market_price" id="market_price"
+                                    <input type="number" name="market_price" id="market_price"
                                         value="{{old('market_price')}}" class="form-control"
                                         placeholder="Enter your market_price">
                                     @error('market_price')
