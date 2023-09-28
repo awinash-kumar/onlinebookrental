@@ -1,12 +1,17 @@
 @extends('master')
 @section('content')
+<style>
+    span {
+     margin-right: -6px;
+    }
+</style>
 <section id="sellers" class="bg_img">
     <div class="container similar-products my-4">
         <hr>
         <div style="display: flex;justify-content:space-between;align-items:center;" class="new_row">
             <p class="display-5 text_col">Books</p>
             <form autocomplete="off" siq_id="autopick_2231" action="" method="get">
-                <input type="Search" class="Search" name="search"
+                <input type="Search" class="Search" name="search" value="{{ Request::get('search') }}"
                     style="width:100%;border-radius:20px;padding:10px 20px;border:none;" placeholder="Search...">
                 
                 <button type="submit" style="background-color:transparent;border:none;"><i class="fa fa-search"></i></button>

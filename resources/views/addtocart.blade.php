@@ -100,7 +100,7 @@ $(document).ready(function() {
                 $(this).find(".product-line-price").text(lineTotal.toFixed(2));
                 totalPrice += lineTotal;
                 $.ajax({
-                    url: '/update-rentcart', // Replace with your update URL
+                    url: '/update-rentcart', 
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -113,10 +113,8 @@ $(document).ready(function() {
                         total: lineTotal
                     },
                     success: function(response) {
-                        // Handle the success response (if needed)
                     },
                     error: function(error) {
-                        // Handle any errors (if needed)
                     }
                 });
             }
@@ -160,10 +158,8 @@ $(document).ready(function() {
                         total: lineTotal
                     },
                     success: function(response) {
-                        // Handle the success response (if needed)
                     },
                     error: function(error) {
-                        // Handle any errors (if needed)
                     }
                 });
             }
@@ -188,11 +184,9 @@ $(document).ready(function() {
                 userId: userId,
             },
             success: function(response) {
-                // Handle a successful response, e.g., show a success message
                 alert('Order created successfully!');
             },
             error: function(error) {
-                // Handle errors, e.g., show an error message
                 alert('Error creating the order.');
             }
         });

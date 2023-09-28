@@ -55,6 +55,11 @@
                 <span class="bi bi-box"></span>
                 <span class="ml-2">Order List</span>
             </a>
+            <!-- <a href="{{route('order.index')}}"
+                class="list-group-item list-group-item-action border-0 align-items-center sidebar-item">
+                <span class="bi bi-box"></span>
+                <span class="ml-2">Return Book List</span>
+            </a> -->
         </div>
     </div>
     <div class="col-md-9 col-lg-10 ml-md-auto px-0 ms-md-auto">
@@ -116,8 +121,19 @@
                                     </div>
                                     <div class="media-body text-right">
                                         <a href="{{ route('book.index') }}">
-                                            <h3>{{ number_format($totalMarketPrice, 2)}}</h3>
-                                            <span>Total Market Price</span>
+                                            <h3 data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="Total Market Price / Rental Price">
+                                                <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="Total Market Price">{{ number_format($totalMarketPrice, 2)}}</span>
+                                                / <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="Total Rental Price">{{ number_format($totalrentalPrice, 2)}}</span>
+                                            </h3>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="Total Market Price / Rental Price">Total <span
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="Total Market Price">M.P</span> /
+                                                <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="Total Rental Price"> R.P</span></span>
                                         </a>
                                     </div>
                                 </div>
@@ -183,9 +199,7 @@
 <script>
 $(document).ready(function() {
     $(".sidebar-item").click(function() {
-        // Remove 'active' class from all sidebar items
         $(".sidebar-item").removeClass("active");
-        // Add 'active' class to the clicked sidebar item
         $(this).addClass("active");
     });
 });

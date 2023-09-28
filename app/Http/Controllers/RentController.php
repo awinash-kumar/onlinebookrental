@@ -21,11 +21,21 @@ class RentController extends Controller
         return  view('contact_us');
       }
 
+      public function about_us(){
+        return  view('about_us');
+      }
 
     public function rentNow($bookId){
         $user = Auth::user();
         $book = Book::find($bookId);
         $rentalPrice = $book->market_price * 0.10;
+        $existingRentCard = RentCard::where('user_id', $user->id)->where('book_status',1)
+        ->where('book_id', $book->id)
+        ->first();
+        if ($existingRentCard) {
+              $existingRentCard->qty = 1; 
+              $existingRentCard->save();
+      } else {
         $rentCard = new RentCard([
             'user_id' => $user->id,
             'book_id' => $book->id,
@@ -36,8 +46,8 @@ class RentController extends Controller
             'rent_price' => $rentalPrice,
             't_price' => $rentalPrice, // Initially, t_price is the same as rental_price
         ]);
-
-        $rentCard->save();
+          $rentCard->save();
+      }
         return redirect()->route('dashboard')->with('success', 'Book add to cart successfully');
     }
 

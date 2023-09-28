@@ -381,9 +381,7 @@ label {
 <script>
 $(document).ready(function() {
     $(".sidebar-item").click(function() {
-        // Remove 'active' class from all sidebar items
         $(".sidebar-item").removeClass("active");
-        // Add 'active' class to the clicked sidebar item
         $(this).addClass("active");
     });
 });
@@ -408,7 +406,7 @@ $(document).ready(function() {
                 $(this).find(".product-line-price").text(lineTotal.toFixed(2));
                 totalPrice += lineTotal;
                 $.ajax({
-                    url: '/update-rentcart', // Replace with your update URL
+                    url: '/update-rentcart', 
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -420,10 +418,8 @@ $(document).ready(function() {
                         total: lineTotal
                     },
                     success: function(response) {
-                        // Handle the success response (if needed)
                     },
                     error: function(error) {
-                        // Handle any errors (if needed)
                     }
                 });
             }

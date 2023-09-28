@@ -33,7 +33,7 @@
                 </div>
                 <div class="product-day text_col">
                     <input type="number" id="day" value="{{ $book->rentOrder->days}}" class="form-control"
-                        style="padding: 4px 0px 5px 12px; text-align: center;" readonly>
+                        style="padding: 4px 0px 5px 5px; text-align: center;" readonly>
                 </div>
                 <div class="product-remove">
                     @if($book->rentOrder->return_status == 1)
@@ -86,7 +86,7 @@ $(document).ready(function() {
                 $(this).find(".product-line-price").text(lineTotal.toFixed(2));
                 totalPrice += lineTotal;
                 $.ajax({
-                    url: '/update-rentcart', // Replace with your update URL
+                    url: '/update-rentcart', 
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -98,10 +98,8 @@ $(document).ready(function() {
                         total: lineTotal
                     },
                     success: function(response) {
-                        // Handle the success response (if needed)
                     },
                     error: function(error) {
-                        // Handle any errors (if needed)
                     }
                 });
             }

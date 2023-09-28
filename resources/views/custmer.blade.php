@@ -102,7 +102,7 @@
             <p class="alert alert-info" style="margin-left: 442px; width:253px;">{{ Session::get('success') }}</p>
             @endif
             <form style="display:flex;gap:10px" action="" method="get">
-                <input type="search" class="Search" name="search" value="" style="border:none"
+                <input type="search" class="Search" name="search" value="{{ Request::get('search') }}" style="border:none"
                     placeholder="Search Here By name,email....." autocomplete="off">
                 <button style="background: #0d6efd; color: white;" type="submit" class="btn">Search</button>
                 <a class="btn btn-success " style=" margin-left: 0%; margin-top: 0%;"

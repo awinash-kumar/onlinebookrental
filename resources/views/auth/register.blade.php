@@ -1,4 +1,13 @@
 <x-guest-layout>
+    <style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+    </style>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -20,15 +29,16 @@
         <!-- Address -->
         <div class="mt-4">
             <x-input-label for="address" :value="__('Address')" />
-            <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required
-                autocomplete="username" />
+            <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')"
+                required autocomplete="username" />
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
-          <!-- mobile -->
-          <div class="mt-4">
+        <!-- mobile -->
+        <div class="mt-4">
             <x-input-label for="mobile" :value="__('Mobile')" />
-            <x-text-input id="mobile" class="block mt-1 w-full" type="number" name="mobile" :value="old('mobile')" required
+            <x-text-input id="mobile" class="block mt-1 w-full" type="number" min="0"
+                oninput="validity.valid||(value='');" name="mobile" :value="old('mobile')" required
                 autocomplete="username" />
             <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
         </div>

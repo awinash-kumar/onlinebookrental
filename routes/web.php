@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::middleware([auth::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/returnItem', [DashboardController::class, 'return_item'])->name('returnItem');
 });
 //Admin profile Route
 Route::middleware([CheckAdminRole::class])->group(function () {
@@ -75,6 +76,7 @@ Route::middleware([CheckCustomorRole::class])->group(function () {
     Route::get('/rent/delete/{rent_id}',[RentController::class, 'delete'])->name('rentbook.delete');
     Route::post('/update-rentcart', [RentController::class, 'updateRentCart'])->name('update-rentcart');
     Route::get('/contact_us', [RentController::class, 'contact_us'])->name('contact_us');
+    Route::get('/about_us', [RentController::class, 'about_us'])->name('about_us');
     Route::get('/get-book-details/{id}', [BookController::class, 'getBookDetails']);
 });
 

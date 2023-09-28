@@ -227,9 +227,7 @@ textarea.form-control {
 <script>
 $(document).ready(function() {
     $(".sidebar-item").click(function() {
-        // Remove 'active' class from all sidebar items
         $(".sidebar-item").removeClass("active");
-        // Add 'active' class to the clicked sidebar item
         $(this).addClass("active");
     });
 });

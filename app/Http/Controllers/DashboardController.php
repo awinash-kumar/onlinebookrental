@@ -14,12 +14,13 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->role_id == 1) {
-            $totalUsers = User::where('role_id', 2)->count();
-            $totalbook = Book::count();
+            $totalUsers = User::where('role_id', 2)->where('delete_status',0)->count();
+            $totalbook = Book::where('delete_status',0)->count();
             $totalMarketPrice = Book::sum('market_price');
-            $totalRentalbook = RentCard::count();
+            $totalrentalPrice = RentCard::where('book_status',1)->sum('t_price');
+            $totalRentalbook = RentCard::where('book_status',1)->count();
             $custmor = User::where('role_id', 2)->where('delete_status',0)->OrderBy('id', 'DESC')->paginate(10);
-            $data = compact('custmor', 'totalUsers', 'totalbook', 'totalMarketPrice','totalRentalbook');
+            $data = compact('custmor', 'totalUsers', 'totalbook', 'totalMarketPrice','totalRentalbook','totalrentalPrice');
             return view('dashboard', $data);
         } else {
             $search = $request->search ?? "";
@@ -34,5 +35,4 @@ class DashboardController extends Controller
             return view('user', $data);
         }
     }
-
 }

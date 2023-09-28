@@ -11,13 +11,13 @@ class BookController extends Controller
       public function index(Request $request){
       $search = $request->search ?? "";
 
-      if($search !=''){
-        $book = Book::where('author','LIKE',"%$search%")->where('delete_status',0)->paginate(10);
-      }
-
         if($search !=''){
-          $book = Book::where('title','LIKE',"%$search%")->where('delete_status',0)->paginate(10);
-        }else{ 
+          $book = Book::where(function ($query) use ($search) {
+            $query->where('author', 'LIKE', "%$search%")
+                  ->orWhere('title', 'LIKE', "%$search%");
+        })->where('delete_status', 0)->paginate(10);
+        }
+        else{ 
           $book = Book::where('delete_status',0)->orderBy('id','DESC')->paginate(10);
 
         }

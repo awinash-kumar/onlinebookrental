@@ -28,6 +28,8 @@
                 </tr>
             </thead>
             <tbody>
+                @if(!$paidOrders->isEmpty() )
+               
                 @foreach( $paidOrders as $paidOrder)
                 <tr>
                     <th scope="row">{{$paidOrder->id}}</th>
@@ -42,6 +44,15 @@
                     </td>
                 </tr>
                 @endforeach
+                @else
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><span style=" font-size:30px"> {{'No Data Found!'}}</span></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                @endif
             </tbody>
         </table>
     </main>

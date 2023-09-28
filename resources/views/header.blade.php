@@ -9,7 +9,7 @@
         <input type="checkbox" name="" id="checkbox">
         <ul class="menu-items">
             <li><a href="{{ route('dashboard')}}">Home</a></li>
-            <!-- <li><a href="" data-bs-toggle="modal" data-bs-target="#bookModalss">About Us</a></li> -->
+            <li><a href="{{route('about_us')}}" >About Us</a></li>
             <li><a href="{{route('paidorder.index')}}">My order</a></li>
             <li><a href="{{ route('contact_us')}}">Contact</a></li>
 
@@ -31,31 +31,6 @@
             <a href="{{ route('addcart') }}">
                 <i class="fa fa-cart-plus" style="font-size:37px;"><sup><strong>{{ $totaladdcart }}</strong></sup></i>
             </a>
-        </div>
-        <!-- model for view book details -->
-        <div class="modal fade" id="bookModalss" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content bg_img model_sty">
-                    <div class="modal-header">
-                        <img class="books_logo"
-                            src="https://thumbs.dreamstime.com/b/hand-book-logo-illustration-art-background-43965136.jpg"
-                            width="50" height="50" style="border-radius: 48px;" alt="">
-                        <h5 class="modal-title" style="margin-right: 189px;" id="bookModalLabel">About Us</h5>
-                    </div>
-                    <div class="modal-body">
-                        <p id="bookDescription" class="form-control" name="description"
-                            placeholder="Enter your description here..." readonly>
-                            Online Books Rental system is an online books and magazine rental service. We have over 10
-                            lakh books and 2
-                            lakh happy customers. With just 3 easy steps you can become a member and start reading.
-                        </p>
-                        <!-- Add other book details here -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn_sty btn btn-primary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
         </div>
         <div
             style="text-align: center;display: flex;flex-direction: column;align-items: center;justify-content: center;">

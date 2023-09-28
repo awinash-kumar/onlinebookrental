@@ -16,10 +16,12 @@ class UserController extends Controller
     public function index(Request $request){
       $search = $request->search ?? "";
       if($search !=''){
-        $custmor = User::where('role_id',2)->where('delete_status',0)->where('name','LIKE',"%$search%");
-      }
-      if($search !=''){
-        $custmor = User::where('role_id',2)->where('delete_status',0)->where('email','LIKE',"%$search%")->paginate(10);
+        $custmor = User::where(function ($query) use ($search) {
+          $query->where('name', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('mobile', 'LIKE', "%$search%");
+      })->where('delete_status', 0)->where('role_id',2)->paginate(10);
+
       }else{ 
         $custmor = User::where('role_id',2)->where('delete_status',0)->OrderBy('id','DESC')->paginate(10);
       }

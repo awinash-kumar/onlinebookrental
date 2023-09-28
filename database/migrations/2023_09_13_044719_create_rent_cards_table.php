@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('rent_price', 8, 2);
             $table->decimal('t_price', 8, 2);
             $table->tinyInteger('book_status')->default(0); // Default value is set to 0
+            $table->tinyInteger('return_status')->default(0); // Default value is set to 0
             $table->timestamps();
 
             // Define foreign key constraints

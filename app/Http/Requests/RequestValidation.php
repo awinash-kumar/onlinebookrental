@@ -23,8 +23,8 @@ class RequestValidation extends FormRequest
     {
         // dd('hhh');
         return [
-            'name' => 'required|string|alpha |max:255',
-            'email' => 'required|email|unique:users',
+            'name' => 'required|string|regex:/^[\pL\s\-]+$/u |max:255',
+            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users',
             'address' => 'nullable|string|max:255',
             'mobile' => 'required|nullable|string|between:10,12',
             'password' => 'required|string|min:8',
