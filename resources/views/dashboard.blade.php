@@ -55,16 +55,11 @@
                 <span class="bi bi-box"></span>
                 <span class="ml-2">Order List</span>
             </a>
-            <!-- <a href="{{route('order.index')}}"
-                class="list-group-item list-group-item-action border-0 align-items-center sidebar-item">
-                <span class="bi bi-box"></span>
-                <span class="ml-2">Return Book List</span>
-            </a> -->
+        
         </div>
     </div>
     <div class="col-md-9 col-lg-10 ml-md-auto px-0 ms-md-auto">
-        <!-- top nav -->
-        <!-- main content -->
+     
         <main class="p-4 min-vh-100" style="padding-top:40px!important;">
             @if(Session::has('success'))
             <p class="alert alert-info" style="margin-left: 442px; width:253px;">{{ Session::get('success') }}</p>

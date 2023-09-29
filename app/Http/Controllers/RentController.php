@@ -71,11 +71,9 @@ public function updateRentCart(Request $request)
     $day = $request->input('day');
     $total = $request->input('total');
 
-    // Find the record in the rentcart table by book ID
     $rentCart = RentCard::where('user_id', $userId)->where('id',$Id)->where('book_id', $bookId)->first();
 
     if ($rentCart) {
-        // Update the quantity and total price
         $rentCart->qty = $quantity;
         $rentCart->days = $day;
         $rentCart->t_price = $total;
@@ -83,7 +81,6 @@ public function updateRentCart(Request $request)
         
         return response()->json(['message' => 'RentCart updated successfully']);
     } else {
-        // Handle the case when the record is not found
         return response()->json(['message' => 'RentCart not found'], 404);
     }
 }
