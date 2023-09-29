@@ -33,7 +33,7 @@ class BookController extends Controller
                 'title'=>'required | regex:/^[\pL\s\-]+$/u',
                 'author'=>'required | regex:/^[\pL\s\-]+$/u',
                 'description'=>'required',
-                'market_price'=>'required | numeric |min:0',
+                'market_price'=>'required | numeric |min:1',
               ]);
     
               if($validation->passes()){
@@ -76,7 +76,7 @@ class BookController extends Controller
               'title'=>'required | regex:/^[\pL\s\-]+$/u',
               'author'=>'required | regex:/^[\pL\s\-]+$/u',
               'description'=>'required ',
-              'market_price'=>'required | numeric |min:0',
+              'market_price'=>'required | numeric |min:1',
               ]);
     
               if($validation->passes()){

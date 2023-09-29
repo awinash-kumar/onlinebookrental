@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('paidorder', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaction_id');
+            $table->unsignedBigInteger('transaction_id')->nullable();
             $table->string('order_id')->nullable();
-            $table->string('book_id')->after('order_id')->nullable(); 
+            $table->string('book_id')->nullable(); 
             $table->foreign('transaction_id')->references('id')->on('payments');
             $table->timestamps();
         });

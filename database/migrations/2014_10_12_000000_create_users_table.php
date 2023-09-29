@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('mobile')->nullable();
             $table->integer('role_id')->nullable();
+            $table->tinyInteger('delete_status')->default(0); // Default value is set to 0
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
             $table->rememberToken();
             $table->timestamps();
         });

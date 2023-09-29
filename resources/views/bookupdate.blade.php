@@ -175,7 +175,7 @@ input[type=number]::-webkit-outer-spin-button {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label id="market_price-label" for="number">Market Price</label>
-                                    <input type="number" name="market_price" id="market_price"
+                                    <input type="text" name="market_price" id="market_price"
                                         value="{{old('market_price',$book->market_price)}}" class="form-control"
                                         placeholder="Enter your market_price">
                                     @error('market_price')

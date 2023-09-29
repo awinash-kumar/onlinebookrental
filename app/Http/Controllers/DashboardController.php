@@ -16,7 +16,7 @@ class DashboardController extends Controller
         if (Auth::user()->role_id == 1) {
             $totalUsers = User::where('role_id', 2)->where('delete_status',0)->count();
             $totalbook = Book::where('delete_status',0)->count();
-            $totalMarketPrice = Book::sum('market_price');
+            $totalMarketPrice = Book::where('delete_status',0)->sum('market_price');
             $totalrentalPrice = RentCard::where('book_status',1)->sum('t_price');
             $totalRentalbook = RentCard::where('book_status',1)->count();
             $custmor = User::where('role_id', 2)->where('delete_status',0)->OrderBy('id', 'DESC')->paginate(10);
