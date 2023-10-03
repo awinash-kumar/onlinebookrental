@@ -52,18 +52,32 @@ class UserController extends Controller
   }
 
   public function edit($id){
-    $custmer = User::find($id);
-    if($custmer !=''){
-        $data = compact('custmer');
-        return view('update_custmer')->with($data); 
-    }else{
-        return to_route('custmer.edit');
-    }
-  }
+    try{
+      $id = decrypt($id);
+      if(!empty($id)){
+        $custmer = User::find($id);
+        if($custmer !=''){
+            $data = compact('custmer');
+            return view('update_custmer')->with($data); 
+        }else{
+            return to_route('custmer.edit');
+        }
+        return  abort(404);
+      }
+      }catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+        abort(404);
+      }
+    } 
+  
+    
+  
 
   public function update($id,RequestValidations $request){
-    $custmer = User::find($id);
+   
     try{
+      $id = decrypt($id);
+      if(!empty($id)){
+      $custmer = User::find($id);
       $custmer->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -74,30 +88,60 @@ class UserController extends Controller
             // 'password' => Hash::make($request->password),
       ]);
       return redirect()->route('custmer.index')->with('success', 'User update successfully');
-    } catch (Exception $e){
-      return to_route('custmer.edit')->with('error', 'Somthing went wrong!');
+    }
+    return abort(404);
+    } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+      abort(404);
     }
     
   }
 
   public function delete($id){
-    $custmer = User::find($id);
-    if($custmer!=''){
-      User::where('id', $id)->update(['delete_status' => 1]);
-        return to_route('custmer.index')->with('success', 'Deleted successfully!');
-    }
+    try {
+      $id = decrypt($id);
+
+      if (!empty($id)) {
+        $custmer = User::find($id);
+        if($custmer!=''){
+          User::where('id', $id)->update(['delete_status' => 1]);
+            return to_route('custmer.index')->with('success', 'Deleted successfully!');
+        }
+      }
+      return abort(404);
+    }catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+      abort(404);
+   }
   }
 
   public function user_delete($id){
-    $custmer = User::find($id);
-    if($custmer!=''){
-      User::where('id', $id)->update(['delete_status' => 1]);
-        // $custmer->delete();
-        return to_route('dashboard')->with('success', 'Deleted successfully!');
-    }
+    try {
+      $id = decrypt($id);
+
+      if (!empty($id)) {
+        $custmer = User::find($id);
+        if($custmer!=''){
+          User::where('id', $id)->update(['delete_status' => 1]);
+            // $custmer->delete();
+            return to_route('dashboard')->with('success', 'Deleted successfully!');
+        }
+      }
+      return abort(404);
+    }catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+      abort(404);
+   }
+   
   }
   public function show($id){
-    $custmer = User::find($id);
-    return view('view_custmer',compact('custmer'));
+    try{
+      $id = decrypt($id);
+      if (!empty($id)) {
+        $custmer = User::find($id);
+        return view('view_custmer',compact('custmer'));
+      }
+      return abort(404);
+    } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+      abort(404);
+    }
+  
   }
 }

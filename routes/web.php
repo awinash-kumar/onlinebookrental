@@ -100,7 +100,5 @@ Route::middleware([CheckCustomorRole::class])->group(function () {
 Route::get('/returnbook/{order_id}', [RentController::class, 'return_book'])->name('return');
 Route::post('/returns_book/{order_id}', [RentController::class, 'store'])->name('return.store');
   
-   
-  
 
 require __DIR__ . '/auth.php';

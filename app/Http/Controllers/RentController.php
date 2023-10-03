@@ -51,15 +51,39 @@ class RentController extends Controller
         return redirect()->route('dashboard')->with('success', 'Book add to cart successfully');
     }
 
-    public function delete($rent_id){
-        $user = Auth::user();
-        $bookcart = RentCard::find($rent_id);
-        if($bookcart!=''){
-            $bookcart->delete();
-            return redirect()->route('addcart')->with('success', 'Remove successfully');
-        }      
-      }
+    // public function delete($rent_ids){
+    //   $rent_id = decrypt($rent_ids);
+    //     $user = Auth::user();
+    //     if (!empty($rent_id)) {
+    //       $bookcart = RentCard::find($rent_id);
+    //       if($bookcart!=''){
+    //         $bookcart->delete();
+    //         return redirect()->route('addcart')->with('success', 'Remove successfully');
+    //     }      
+    //     }
+    //     return redirect()->back()->with('success', 'Invalid book ID or book not found');
+      
+    //   }
 
+      public function delete($rent_ids) {
+        try {
+            $rent_id = decrypt($rent_ids);
+    
+            if (!empty($rent_id)) {
+                $bookcart = RentCard::find($rent_id);
+    
+                if ($bookcart != null) {
+                    $bookcart->delete();
+                    return redirect()->route('addcart')->with('success', 'Remove successfully');
+                }
+            }
+    
+            return abort(404);;
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+           abort(404);
+        }
+    }
+    
 
 public function updateRentCart(Request $request)
 {

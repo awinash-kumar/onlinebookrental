@@ -129,11 +129,11 @@
                         <td>{{$user->mobile}}</td>
                         <td>{{$user->address}}</td>
                         <td>
-                            <a href="{{route('custmer.edit',$user->id)}}"><i
+                            <a href="{{route('custmer.edit',encrypt($user->id))}}"><i
                                     class="fa fa-pencil fa_custom_pencil"></i></a>
                             <a style="padding:0 10px"><i class="fa fa-trash fa_custom_delete"
-                                    onclick="deleteUser({{$user->id}})"></i></a>
-                            <a href="{{route('custmer.show',$user->id)}}"><i class="fa fa-eye fa_custom_eye"></i></a>
+                                    onclick="deleteUser('{{encrypt($user->id)}}')"></i></a>
+                            <a href="{{route('custmer.show',encrypt($user->id))}}"><i class="fa fa-eye fa_custom_eye"></i></a>
                         </td>
                     </tr>
                 </tbody>

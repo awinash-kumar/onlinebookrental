@@ -25,7 +25,6 @@
         <div class="row">
         @if(!$book->isEmpty())
             @foreach( $book as $books)
-          
             <div class="col-md-3">
                 <div class="similar-product shrink">
                     <img src="{{ url('uploads/books/' . $books->images ) }}" class="mt-3" alt="" width="200"
@@ -34,16 +33,15 @@
                     <p class="price text_col" style="margin-bottom: 0rem;">${{$books->market_price}}.</p>
                     @if($books->userCart)
                     <a class="btn_sty1 btn btn-success" href="{{ route('addcart') }}" style="color:white;">Go To
-                        Cart</a></button>
+                        Cart</a>
                     @else
                     <a class="btn_sty btn btn-primary" href="{{ route('rent.rentNow',$books->id ) }}"
-                        style="color:white;">Rent Now</a></button>
+                        style="color:white;">Rent Now</a>
                     @endif
                     <button class="btn_style btn btn-primary view-button" data-bs-toggle="modal"
                         data-bs-target="#bookModal" data-book-id="{{ $books->id }}">View Detail</button>
                 </div>
             </div>
-          
             @endforeach
             @else
            <span style="color: white; font-size:30px">  {{'No Data Found!'}}</span>

@@ -61,23 +61,33 @@ class BookController extends Controller
           }
 
           public  function edit($id){
-            $book = Book::find($id);
-            if($book !=''){
-                $data = compact('book');
-                return view('bookupdate')->with($data); 
-            }else{
-                return to_route('book.edit');
-            }
+
+            try{
+              $id = decrypt($id);
+              if(!empty($id)){
+                $book = Book::find($id);
+                if($book !=''){
+                    $data = compact('book');
+                    return view('bookupdate')->with($data); 
+                }else{
+                    return to_route('book.edit');
+                }
+              }
+              return abort(404);
+              } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+                  abort(404);
+              }
+          
           }
 
           public function update($id, Request $request){
 
-            $validation =  validator::make($request->all(),[
-              'title'=>'required | regex:/^[\pL\s\-]+$/u',
-              'author'=>'required | regex:/^[\pL\s\-]+$/u',
-              'description'=>'required ',
-              'market_price'=>'required | numeric |min:1',
-              ]);
+              $validation =  validator::make($request->all(),[
+                'title'=>'required | regex:/^[\pL\s\-]+$/u',
+                'author'=>'required | regex:/^[\pL\s\-]+$/u',
+                'description'=>'required ',
+                'market_price'=>'required | numeric |min:1',
+                ]);
     
               if($validation->passes()){
                   $book = Book::find($id);
@@ -88,7 +98,7 @@ class BookController extends Controller
                   $book->delete_status = 0;
                   $book->save();
                    if ($request->hasFile('images')) {
-                    $oldImg = $book->images;
+                        $oldImg = $book->images;
                         $image = $request->file('images');
                         $imageName = time() . '.' . $image->getClientOriginalExtension();
                         $image->move(public_path('uploads/books'), $imageName);   
@@ -106,18 +116,36 @@ class BookController extends Controller
           }
 
           public function delete($id){
-            $book = Book::find($id);
-            if($book!=''){
-                File::delete(public_path('uploads/book/' .$book->images));
-                Book::where('id', $id)->update(['delete_status' => 1]);
-                // $book->delete();
-                return to_route('book.index')->with('success', 'Deleted successfully!');
+            try{
+              $id = decrypt($id);
+              if(!empty($id)){
+                $book = Book::find($id);
+                if($book!=''){
+                    File::delete(public_path('uploads/book/' .$book->images));
+                    Book::where('id', $id)->update(['delete_status' => 1]);
+                    // $book->delete();
+                    return to_route('book.index')->with('success', 'Deleted successfully!');
+                }
+              }
+             return abort(404);
+            } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+              abort(404);
             }
+           
           }
     
           public function show($id){
-            $book = Book::find($id);
-            return view('viewbook',compact('book'));
+            try{
+              $id = decrypt($id);
+              if(!empty($id)){
+                $book = Book::find($id);
+                return view('viewbook',compact('book'));
+              }
+              return abort(404);
+              } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+                  abort(404);
+              }
+           
           }
 
           public function getBookDetails($id)

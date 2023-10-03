@@ -27,7 +27,16 @@ class OrderController extends Controller
 
   
         public function show($tran_id){
-            $orderdetail = Paidorders::with(['rentpaidOrder','paidOrder'])->where('transaction_id',$tran_id)->orderBy('id', 'DESC')->get();
-            return view('order_details')->with(compact('orderdetail'));
+            try{
+                $tran_id = decrypt($tran_id);
+                if(!empty($tran_id)){
+                    $orderdetail = Paidorders::with(['rentpaidOrder','paidOrder'])->where('transaction_id',$tran_id)->orderBy('id', 'DESC')->get();
+                    return view('order_details')->with(compact('orderdetail'));
+                }
+                return abort(404);
+            } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+                abort(404);
+            }
+          
           }
 }

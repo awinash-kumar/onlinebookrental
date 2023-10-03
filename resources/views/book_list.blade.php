@@ -138,11 +138,11 @@
                         </td>
                         <td>{{$books->market_price}}</td>
                         <td>
-                            <a href="{{route('book.edit',$books->id)}}"><i
+                            <a href="{{route('book.edit',encrypt($books->id))}}"><i
                                     class="fa fa-pencil fa_custom_pencil"></i></a>
                             <a style="padding:0 10px"><i class="fa fa-trash fa_custom_delete"
-                                    onclick="deletebook({{$books->id}})"></i></a>
-                            <a href="{{route('book.show',$books->id)}}"><i class="fa fa-eye fa_custom_eye"></i></a>
+                                    onclick="deletebook('{{encrypt($books->id)}}')"></i></a>
+                            <a href="{{route('book.show',encrypt($books->id))}}"><i class="fa fa-eye fa_custom_eye"></i></a>
                         </td>
                     </tr>
                     @endforeach

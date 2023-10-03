@@ -137,7 +137,7 @@ input[type=number]::-webkit-outer-spin-button {
 
                 <div class="form-wrap" style="background-color: #d1e7dd;">
                     <h2 style="text-align: center; font-size: 24px;font-weight: 700;padding-bottom: 33px;">Edit User</h2>
-                    <form id="survey-form" action="{{ route('custmer.update',$custmer->id) }}" method="POST">
+                    <form id="survey-form" action="{{ route('custmer.update',encrypt($custmer->id) ) }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -150,7 +150,7 @@ input[type=number]::-webkit-outer-spin-button {
                                         {{$message}}
                                     </span>
                                     @enderror
-                                    </span>
+                                    </span> 
                                 </div>
                             </div>
                             <div class="col-md-6">

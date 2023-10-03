@@ -38,7 +38,7 @@
                         style="padding: 4px 0px 5px 12px; text-align: center;">
                 </div>
                 <div class="product-removal">
-                    <a class="remove-product btn btn-danger" onclick="deletebook({{$book->id}})">
+                    <a class="remove-product btn btn-danger" onclick="deletebook('{{ encrypt($book->id) }}')">
                         Remove
                     </a>
                 </div>

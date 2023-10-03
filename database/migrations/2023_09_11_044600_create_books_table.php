@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('author')->nullable();
             $table->text('description')->nullable();
             $table->string('images')->nullable();
-            $table->decimal('market_price', 8, 2);
+            $table->decimal('market_price', 8, 2)->nullable();
             $table->tinyInteger('delete_status')->default(0); // Default value is set to 0
             $table->timestamps();
         });

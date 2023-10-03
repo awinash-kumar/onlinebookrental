@@ -128,7 +128,7 @@
                         <td>{{number_format($order->amount,2)}}</td>
                         <td>{{date('Y-M-d', strtotime($order->created_at))}}</td>
                         <td>
-                            <a href="{{route('details',$order->id)}}" class="btn btn-success">Detail</a>
+                            <a href="{{route('details',encrypt($order->id))}}" class="btn btn-success">Detail</a>
                         </td>
                     </tr>
                     @endforeach
