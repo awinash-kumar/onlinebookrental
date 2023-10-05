@@ -43,8 +43,10 @@ class Spinner extends Prompt
         $this->capturePreviousNewLines();
 
         if (! function_exists('pcntl_fork')) {
-            return $this->renderStatically($callback);
+            $this->renderStatically($callback);
         }
+
+        $this->hideCursor();
 
         $originalAsync = pcntl_async_signals(true);
 
@@ -54,7 +56,6 @@ class Spinner extends Prompt
         });
 
         try {
-            $this->hideCursor();
             $this->render();
 
             $pid = pcntl_fork();
@@ -69,32 +70,23 @@ class Spinner extends Prompt
                 }
             } else {
                 $result = $callback();
-
-                $this->resetTerminal($originalAsync, $pid);
+                posix_kill($pid, SIGHUP);
+                $lines = explode(PHP_EOL, $this->prevFrame);
+                $this->moveCursor(-999, -count($lines) + 1);
+                $this->eraseDown();
+                $this->showCursor();
+                pcntl_async_signals($originalAsync);
+                pcntl_signal(SIGINT, SIG_DFL);
 
                 return $result;
             }
         } catch (\Throwable $e) {
-            $this->resetTerminal($originalAsync, $pid ?? null);
+            $this->showCursor();
+            pcntl_async_signals($originalAsync);
+            pcntl_signal(SIGINT, SIG_DFL);
 
             throw $e;
         }
-    }
-
-    /**
-     * Reset the terminal.
-     */
-    protected function resetTerminal(bool $originalAsync, ?int $pid): void
-    {
-        if ($pid) {
-            posix_kill($pid, SIGHUP);
-        }
-
-        pcntl_async_signals($originalAsync);
-        pcntl_signal(SIGINT, SIG_DFL);
-
-        $this->eraseRenderedLines();
-        $this->showCursor();
     }
 
     /**
@@ -109,17 +101,9 @@ class Spinner extends Prompt
     {
         $this->static = true;
 
-        try {
-            $this->hideCursor();
-            $this->render();
+        $this->render();
 
-            $result = $callback();
-        } finally {
-            $this->eraseRenderedLines();
-            $this->showCursor();
-        }
-
-        return $result;
+        return $callback();
     }
 
     /**
@@ -138,15 +122,5 @@ class Spinner extends Prompt
     public function value(): bool
     {
         return true;
-    }
-
-    /**
-     * Clear the lines rendered by the spinner.
-     */
-    protected function eraseRenderedLines(): void
-    {
-        $lines = explode(PHP_EOL, $this->prevFrame);
-        $this->moveCursor(-999, -count($lines) + 1);
-        $this->eraseDown();
     }
 }

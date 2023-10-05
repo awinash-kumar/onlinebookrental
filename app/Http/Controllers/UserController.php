@@ -96,7 +96,8 @@ class UserController extends Controller
     
   }
 
-  public function delete($id){
+  public function delete($id)
+  {
     try {
       $id = decrypt($id);
 
@@ -113,7 +114,8 @@ class UserController extends Controller
    }
   }
 
-  public function user_delete($id){
+  public function user_delete($id)
+  {
     try {
       $id = decrypt($id);
 
@@ -128,8 +130,7 @@ class UserController extends Controller
       return abort(404);
     }catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
       abort(404);
-   }
-   
+   } 
   }
   public function show($id){
     try{
@@ -142,6 +143,5 @@ class UserController extends Controller
     } catch(\Illuminate\Contracts\Encryption\DecryptException $e){
       abort(404);
     }
-  
   }
 }

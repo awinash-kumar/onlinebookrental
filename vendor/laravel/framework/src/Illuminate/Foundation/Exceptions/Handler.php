@@ -42,7 +42,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
-use WeakMap;
 
 class Handler implements ExceptionHandlerContract
 {
@@ -121,20 +120,6 @@ class Handler implements ExceptionHandlerContract
     ];
 
     /**
-     * Indicates that an exception instance should only be reported once.
-     *
-     * @var bool
-     */
-    protected $withoutDuplicates = false;
-
-    /**
-     * The already reported exception map.
-     *
-     * @var \WeakMap
-     */
-    protected $reportedExceptionMap;
-
-    /**
      * Create a new exception handler instance.
      *
      * @param  \Illuminate\Contracts\Container\Container  $container
@@ -143,8 +128,6 @@ class Handler implements ExceptionHandlerContract
     public function __construct(Container $container)
     {
         $this->container = $container;
-
-        $this->reportedExceptionMap = new WeakMap;
 
         $this->register();
     }
@@ -277,8 +260,6 @@ class Handler implements ExceptionHandlerContract
      */
     protected function reportThrowable(Throwable $e): void
     {
-        $this->reportedExceptionMap[$e] = true;
-
         if (Reflector::isCallable($reportCallable = [$e, 'report']) &&
             $this->container->call($reportCallable) !== false) {
             return;
@@ -326,10 +307,6 @@ class Handler implements ExceptionHandlerContract
      */
     protected function shouldntReport(Throwable $e)
     {
-        if ($this->withoutDuplicates && ($this->reportedExceptionMap[$e] ?? false)) {
-            return true;
-        }
-
         $dontReport = array_merge($this->dontReport, $this->internalDontReport);
 
         return ! is_null(Arr::first($dontReport, fn ($type) => $e instanceof $type));
@@ -807,18 +784,6 @@ class Handler implements ExceptionHandlerContract
         }
 
         (new ConsoleApplication)->renderThrowable($e, $output);
-    }
-
-    /**
-     * Do not report duplicate exceptions.
-     *
-     * @return $this
-     */
-    public function dontReportDuplicates()
-    {
-        $this->withoutDuplicates = true;
-
-        return $this;
     }
 
     /**

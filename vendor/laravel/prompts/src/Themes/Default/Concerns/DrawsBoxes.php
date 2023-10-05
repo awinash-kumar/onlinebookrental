@@ -18,7 +18,6 @@ trait DrawsBoxes
         string $body,
         string $footer = '',
         string $color = 'gray',
-        string $info = '',
     ): self {
         $this->minWidth = min($this->minWidth, Prompt::terminal()->cols() - 6);
 
@@ -32,6 +31,8 @@ trait DrawsBoxes
         );
 
         $topBorder = str_repeat('─', $width - mb_strwidth($this->stripEscapeSequences($title)));
+        $bottomBorder = str_repeat('─', $width + 2);
+
         $this->line("{$this->{$color}(' ┌')} {$title} {$this->{$color}($topBorder.'┐')}");
 
         $bodyLines->each(function ($line) use ($width, $color) {
@@ -39,16 +40,14 @@ trait DrawsBoxes
         });
 
         if ($footerLines->isNotEmpty()) {
-            $this->line($this->{$color}(' ├'.str_repeat('─', $width + 2).'┤'));
+            $this->line($this->{$color}(' ├'.$bottomBorder.'┤'));
 
             $footerLines->each(function ($line) use ($width, $color) {
                 $this->line("{$this->{$color}(' │')} {$this->pad($line, $width)} {$this->{$color}('│')}");
             });
         }
 
-        $this->line($this->{$color}(' └'.str_repeat(
-            '─', $info ? ($width - mb_strwidth($this->stripEscapeSequences($info))) : ($width + 2)
-        ).($info ? " {$info} " : '').'┘'));
+        $this->line($this->{$color}(' └'.$bottomBorder.'┘'));
 
         return $this;
     }

@@ -324,7 +324,6 @@ abstract class Component
         return array_merge([
             'data',
             'render',
-            'resolve',
             'resolveView',
             'shouldRender',
             'view',

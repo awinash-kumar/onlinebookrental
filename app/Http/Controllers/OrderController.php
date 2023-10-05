@@ -18,10 +18,8 @@ class OrderController extends Controller
             if($search !=''){
                 $orderCard = Payment::where('transaction_id','LIKE',"%$search%")->orwhere('order_number','LIKE',"%$search%")->paginate(10);
             }else{ 
-                $orderCard = Payment::orderBy('id', 'DESC')->paginate(10); 
-        
-            }
-                    
+                $orderCard = Payment::orderBy('id', 'DESC')->paginate(10);        
+            }              
             return view('order')->with(compact('orderCard'));
         }
 
